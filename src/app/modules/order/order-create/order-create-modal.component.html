@@ -1,0 +1,16 @@
+<ng-template #modalContent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Criar Novo Pedido</h4>
+      </div>
+      <div class="modal-body" *ngIf="order">
+          <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+          </div>
+          <label for="customerName">Nome do Cliente</label>
+          <input type="text" id="customerName" class="form-control" [(ngModel)]="order.customerName" name="customerName">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">Cancelar</button>
+        <button type="button" class="btn btn-success" ngbAutofocus (click)="createOrder()">Criar</button>
+      </div>
+</ng-template>

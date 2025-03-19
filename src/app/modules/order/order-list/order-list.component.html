@@ -1,0 +1,51 @@
+<div>
+    <h2 class="mb-3">Lista de Pedidos</h2>
+  <button class="btn btn-primary mb-3" (click)="createModal.openCreateModal()">
+    Novo Pedido
+  </button>
+
+  <table class="table table-bordered table-hover" style="font-size:15px;">
+      <thead class="table-dark">
+          <tr>
+              <th scope="col">Cliente</th>
+              <th scope="col" (click)="toggleSortByStatus()">
+                  Status
+                  <span *ngIf="showClosedFirst">▲</span>
+                  <span *ngIf="!showClosedFirst">▼</span>
+              </th>
+              <th scope="col">Opções</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let order of paginatedOrders()">
+              <td>{{ order.customerName }}</td>
+              <td>
+                  <span class="badge" [ngClass]="order.isClosed ? 'bg-danger' : 'bg-success'">
+                      {{ order.isClosed ? 'Fechado' : 'Aberto' }}
+                  </span>
+              </td>
+              <td>
+                  <a style="cursor:pointer" (click)="editModal.openEditModal(order.id)">
+                      <i class="bi bi-pencil-square fs-4"></i>
+                  </a>
+                  <a *ngIf="!order.isClosed" style="cursor:pointer; margin-left: 10px;"
+                     (click)="closeModal.openCloseModal(order.id, order.isClosed)">
+                      <i class="bi bi-file-earmark-lock fs-4"></i>
+                  </a>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
+  <nav>
+      <ngb-pagination [collectionSize]="orders.length"
+                      [(page)]="page"
+                      [pageSize]="pageSize"
+                      (pageChange)="onPageChange($event)">
+      </ngb-pagination>
+  </nav>
+</div>
+
+<create-order-modal #createModal (orderCreated)="loadOrders()"></create-order-modal>
+<order-edit-modal #editModal (orderEdited)="loadOrders()"></order-edit-modal>
+<close-order-modal #closeModal (orderClosed)="loadOrders()"></close-order-modal>

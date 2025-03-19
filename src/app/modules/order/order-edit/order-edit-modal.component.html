@@ -1,0 +1,55 @@
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Gerenciar produtos no pedido</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+
+    <div class="modal-body" *ngIf="order">
+        <div class="mb-2">
+            <strong>Cliente:</strong> {{ order.customerName }}<br>
+            <span class="badge" [ngClass]="order.isClosed ? 'bg-danger' : 'bg-success'">
+                {{ order.isClosed ? 'Fechado' : 'Aberto' }}
+            </span>
+        </div>
+
+        <div class="mb-2" *ngIf="order && !order.isClosed">
+            <h5>Adicionar produto</h5>
+            <select [(ngModel)]="selectedProductId" class="form-control">
+                <option [ngValue]="null">-- Selecione um produto --</option>
+                <option *ngFor="let p of availableProducts" [ngValue]="p.id">
+                    {{ p.name }} (R$ {{ p.price }})
+                </option>
+            </select>
+            <button class="btn btn-sm btn-success mt-2" (click)="addProductToOrder()">
+                Adicionar
+            </button>
+        </div>
+
+        <h5>Produtos no Pedido</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th *ngIf="order && !order.isClosed">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let op of order.products">
+                    <td>{{ getProductName(op.productId) }} </td>
+                    <td>{{ getProductPrice(op.productId) }} R$</td>
+                    <td *ngIf="order && !order.isClosed">
+                        <button class="btn btn-sm btn-danger" (click)="removeProductFromOrder(op.productId)">
+                            Remover
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeModal()">Fechar</button>
+    </div>
+</ng-template>
+

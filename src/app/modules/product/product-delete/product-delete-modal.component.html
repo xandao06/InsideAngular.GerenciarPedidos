@@ -1,0 +1,15 @@
+<ng-template #modalContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Deletar Produto</h4>
+  </div>
+  <div class="modal-body">
+      <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+      </div>
+      <p>Tem certeza que deseja deletar este produto?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+    <button class="btn btn-danger" ngbAutofocus (click)="deleteProduct()">Deletar</button>
+  </div>
+</ng-template>

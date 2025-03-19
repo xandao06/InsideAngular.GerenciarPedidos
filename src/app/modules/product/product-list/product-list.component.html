@@ -1,0 +1,38 @@
+<div>
+  <h2 class="mb-3">Lista de Produtos</h2>
+
+  <button class="btn btn-primary mb-3" (click)="createModal.openCreateModal()">
+    Novo Produto
+  </button>
+      <table class="table table-bordered table-hover" style="font-size:15px;">
+          <thead class="table-dark">
+              <tr>
+                  <th scope="col">Nome do Produto</th>
+                  <th scope="col">Preço</th>
+                  <th scope="col">Opções</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let product of paginatedProducts()">
+                  <td>{{ product.name }}</td>
+                  <td> R$ {{ product.price }}</td>
+                  <td>
+                      <a style="cursor:pointer" (click)="deleteModal.openDeleteModal(product.id)">
+                          <i class="bi bi-trash fs-4"></i>
+                      </a>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <nav>
+    <ngb-pagination [collectionSize]="products.length"
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    (pageChange)="onPageChange($event)">
+    </ngb-pagination>
+  </nav>
+
+<create-product-modal #createModal (productCreated)="loadProducts()"></create-product-modal>
+<delete-product-modal #deleteModal (productDeleted)="loadProducts()"></delete-product-modal>
