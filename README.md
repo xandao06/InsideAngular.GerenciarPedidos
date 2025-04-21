@@ -1,5 +1,6 @@
-Aplicação teste de gerenciar pedidos
-com MicroServiços
+# InsideAngularGerenciarPedidos
+ 
+ Aplicação em Angular para o teste técnico da Inside Sistemas.
 
 ## Configuração
 
